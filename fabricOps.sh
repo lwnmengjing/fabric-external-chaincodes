@@ -52,9 +52,9 @@ function generateCerts(){
         echo "##########################################################"
         echo "##### Generate certificates using cryptogen tool #########"
         echo "##########################################################"
-        if [ -d ./crypto-config ]; then
-                rm -rf ./crypto-config
-        fi
+        # if [ -d ./crypto-config ]; then
+        #         rm -rf ./crypto-config
+        # fi
 
     $GOPATH/bin/cryptogen generate --config=./crypto-config.yaml
     echo
@@ -109,30 +109,30 @@ function startNetwork() {
 function cleanNetwork() {
     cd $PROJECT_DIR
     
-    if [ -d ./channel-artifacts ]; then
-            rm -rf ./channel-artifacts
-    fi
+    # if [ -d ./channel-artifacts ]; then
+    #         rm -rf ./channel-artifacts
+    # fi
 
-    if [ -d ./crypto-config ]; then
-            rm -rf ./crypto-config
-    fi
+    # if [ -d ./crypto-config ]; then
+    #         rm -rf ./crypto-config
+    # fi
 
-    if [ -d ./tools ]; then
-            rm -rf ./tools
-    fi
+    # if [ -d ./tools ]; then
+    #         rm -rf ./tools
+    # fi
 
-    if [ -f ./docker-compose.yaml ]; then
-        rm ./docker-compose.yaml
-    fi
+    # if [ -f ./docker-compose.yaml ]; then
+    #     rm ./docker-compose.yaml
+    # fi
 
-    if [ -f ./docker-compose.yamlt ]; then
-        rm ./docker-compose.yamlt
-    fi
+    # if [ -f ./docker-compose.yamlt ]; then
+    #     rm ./docker-compose.yamlt
+    # fi
 
     # This operations removes all docker containers and images regardless
     #
-    docker rm -f $(docker ps -aq)
-    docker rmi -f $(docker images -q)
+    # docker rm -f $(docker ps -aq)
+    # docker rmi -f $(docker images -q)
     
     # This removes containers used to support the running chaincode.
     #docker rm -f $(docker ps --filter "name=dev" --filter "name=peer0.org1.example.com" --filter "name=cli" --filter "name=orderer.example.com" -q)

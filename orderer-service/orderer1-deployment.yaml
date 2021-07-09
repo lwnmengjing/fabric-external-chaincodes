@@ -70,28 +70,45 @@ spec:
           ports:
             - containerPort: 7050
             - containerPort: 8443
+          # volumeMounts:
+          #   - mountPath: /var/hyperledger/production
+          #     name: orderer1-persistentdata
+          #   - mountPath: /var/hyperledger/orderer/genesis.block
+          #     name: orderer1-claim0
+          #   - mountPath: /var/hyperledger/orderer/msp
+          #     name: orderer1-claim1
+          #   - mountPath: /var/hyperledger/orderer/tls
+          #     name: orderer1-claim2
           volumeMounts:
-            - mountPath: /var/hyperledger/production
-              name: orderer1-persistentdata
-            - mountPath: /var/hyperledger/orderer/genesis.block
-              name: orderer1-claim0
-            - mountPath: /var/hyperledger/orderer/msp
-              name: orderer1-claim1
-            - mountPath: /var/hyperledger/orderer/tls
-              name: orderer1-claim2
+          - name: orderer1-storage
+            mountPath: /var/hyperledger/production/
+          # - name: channel-artifacts
+          #   mountPath: /var/hyperledger/orderer/
+          - name: orderer1-config
+            mountPath: /var/hyperledger/orderer
           workingDir: /opt/gopath/src/github.com/hyperledger/fabric
       restartPolicy: Always
       volumes:
-        - name: orderer1-persistentdata
-          hostPath:
-            path: /home/storage/orderer1
-            type: DirectoryOrCreate
-        - name: orderer1-claim0
-          hostPath:
-            path: /home/fabric-external-chaincodes/channel-artifacts/genesis.block
-        - name: orderer1-claim1
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/msp
-        - name: orderer1-claim2
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/tls
+      - name: orderer1-storage
+        persistentVolumeClaim:
+          claimName: orderer1-storage
+      # - name: channel-artifacts
+      #   persistentVolumeClaim:
+      #     claimName: channel-artifacts
+      - name: orderer1-config
+        persistentVolumeClaim:
+          claimName: orderer1-config
+      # volumes:
+      #   - name: orderer1-persistentdata
+      #     hostPath:
+      #       path: /home/storage/orderer1
+      #       type: DirectoryOrCreate
+      #   - name: orderer1-claim0
+      #     hostPath:
+      #       path: /home/fabric-external-chaincodes/channel-artifacts/genesis.block
+      #   - name: orderer1-claim1
+      #     hostPath:
+      #       path: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/msp
+      #   - name: orderer1-claim2
+      #     hostPath:
+      #       path: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/tls

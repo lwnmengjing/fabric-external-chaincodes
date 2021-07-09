@@ -1,0 +1,93 @@
+apiVersion: batch/v1
+kind: Job
+# apiVersion: apps/v1
+# kind: Deployment
+metadata:
+  name: fabric-pre-deploy
+  labels:
+    app: fabric-pre-deploy
+spec:
+  # selector:
+  #   matchLabels:
+  #     app: fabric-pre-deploy
+  # replicas: 1
+  # strategy:
+  #   type: Recreate
+  template:
+    metadata:
+      name: fabric-pre-deploy
+      labels:
+        app: fabric-pre-deploy
+    spec:
+      containers:
+      - name: fabric-pre-deploy
+        image: myfabric/fabric-deploy:0.0.1
+        command: ["/bin/sh","-c"]
+        args:
+          - |
+            ping www.baidu.com
+            cd /root/fabric-external-chaincodes  && /root/fabric-external-chaincodes/fabricOps.sh start
+            cp -r /root/fabric-external-chaincodes /home/fabric-external-chaincodes
+            # cp -r /root/fabric-external-chaincodes/channel-artifacts/* /home/fabric-external-chaincodes/channel-artifacts/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/* /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/* /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/* /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/*
+            # cp -r /root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/* /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/*
+
+        # command: ["/bin/sh", "-c", "cd /root/fabric-external-chaincodes && /root/fabric-external-chaincodes/fabricOps.sh start"]
+        volumeMounts:
+        - name: channel-artifacts
+          mountPath: /home/fabric-external-chaincodes/channel-artifacts/
+        - name: orderer0-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0/
+        - name: orderer1-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/
+        - name: orderer2-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2/
+        - name: ca-org1-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/
+        - name: ca-org2-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/
+        - name: cli-chaincode
+          mountPath: /home/fabric-external-chaincodes/chaincode/
+        - name: peer0-org1-crypto-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/
+        - name: peer0-org2-crypto-config
+          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/
+        - name: fabcar
+          mountPath: /home/fabric-external-chaincodes/fabcar/
+      restartPolicy: Never
+      volumes:
+      - name: channel-artifacts
+        persistentVolumeClaim:
+          claimName: channel-artifacts
+      - name: orderer0-config
+        persistentVolumeClaim:
+          claimName: orderer0-config
+      - name: orderer1-config
+        persistentVolumeClaim:
+          claimName: orderer1-config
+      - name: orderer2-config
+        persistentVolumeClaim:
+          claimName: orderer2-config
+      - name: ca-org1-config
+        persistentVolumeClaim:
+          claimName: ca-org1-config
+      - name: ca-org2-config
+        persistentVolumeClaim:
+          claimName: ca-org2-config
+      - name: cli-chaincode
+        persistentVolumeClaim:
+          claimName: cli-chaincode
+      - name: peer0-org1-crypto-config
+        persistentVolumeClaim:
+          claimName: peer0-org1-crypto-config
+      - name: peer0-org2-crypto-config
+        persistentVolumeClaim:
+          claimName: peer0-org2-crypto-config
+      - name: fabcar
+        persistentVolumeClaim:
+          claimName: fabcar
