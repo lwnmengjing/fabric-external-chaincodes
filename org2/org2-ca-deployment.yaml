@@ -42,11 +42,15 @@ spec:
             - containerPort: 7054
           volumeMounts:
             - mountPath: /etc/hyperledger/fabric-ca-server-config
-              name: ca-org2-claim0
+              name: ca-org2-config
+              subPath: ca
               readOnly: true
       restartPolicy: Always
       volumes:
-        - name: ca-org2-claim0
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/ca/
-            type: Directory
+      - name: ca-org2-config
+        persistentVolumeClaim:
+          claimName: ca-org2-config
+        # - name: ca-org2-claim0
+        #   hostPath:
+        #     path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/ca/
+        #     type: Directory

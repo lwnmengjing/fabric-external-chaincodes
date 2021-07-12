@@ -65,9 +65,16 @@ spec:
             - containerPort: 9443
           volumeMounts:
             - mountPath: /etc/hyperledger/fabric/msp
-              name: peer0-org1-claim1
+              name: ca-org1-config
+              subPath: peers/peer0-org1/msp
             - mountPath: /etc/hyperledger/fabric/tls
-              name: peer0-org1-claim2
+              name: ca-org1-config
+              subPath: peers/peer0-org1/tls
+
+            # - mountPath: /etc/hyperledger/fabric/msp
+            #   name: peer0-org1-claim1
+            # - mountPath: /etc/hyperledger/fabric/tls
+            #   name: peer0-org1-claim2
             - mountPath: /var/hyperledger/production
               name: peer0-persistentdata
             - mountPath: /etc/hyperledger/fabric/core.yaml
@@ -84,18 +91,26 @@ spec:
               subPath: release
       restartPolicy: Always
       volumes:
-        - name: peer0-org1-claim1
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/msp
-            type: Directory
-        - name: peer0-org1-claim2
-          hostPath:
-            path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/tls
-            type: Directory
+        # - name: peer0-org1-claim1
+        #   hostPath:
+        #     path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/msp
+        #     type: Directory
+        # - name: peer0-org1-claim2
+        #   hostPath:
+        #     path: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/tls
+        #     type: Directory
+        # - name: peer0-persistentdata
+        #   hostPath:
+        #     path: /home/storage/peer0-org1
+        #     type: DirectoryOrCreate
+        - name: ca-org1-config
+          persistentVolumeClaim:
+            claimName: ca-org1-config
         - name: peer0-persistentdata
-          hostPath:
-            path: /home/storage/peer0-org1
-            type: DirectoryOrCreate
+          persistentVolumeClaim:
+            claimName: peer0-org1
+            
+        
         - name: builders-config
           configMap:
             name: builders-config

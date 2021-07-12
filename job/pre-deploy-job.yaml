@@ -25,10 +25,10 @@ spec:
         command: ["/bin/sh","-c"]
         args:
           - |
-            ping www.baidu.com
             cd /root/fabric-external-chaincodes  && /root/fabric-external-chaincodes/fabricOps.sh start
-            cp -r /root/fabric-external-chaincodes /home/fabric-external-chaincodes
-            # cp -r /root/fabric-external-chaincodes/channel-artifacts/* /home/fabric-external-chaincodes/channel-artifacts/*
+            cp -r /root/fabric-external-chaincodes/* /home/fabric-external-chaincodes/
+            # cp -r /root/fabric-external-chaincodes/channel-artifacts/* /home/fabric-external-chaincodes/channel-artifacts/
+            # sleep 10m
             # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0/*
             # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1/*
             # cp -r /root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2/* /home/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2/*
@@ -39,6 +39,14 @@ spec:
 
         # command: ["/bin/sh", "-c", "cd /root/fabric-external-chaincodes && /root/fabric-external-chaincodes/fabricOps.sh start"]
         volumeMounts:
+        # - name: genesis-block
+        #   mountPath: /home/fabric-external-chaincodes/channel-artifacts/genesis.block
+        # - name: channel-tx
+        #   mountPath: /home/fabric-external-chaincodes/channel-artifacts/channel.tx
+        # - name: org1-anchors-tx
+        #   mountPath: /home/fabric-external-chaincodes/channel-artifacts/org1Anchors.tx
+        # - name: org2-anchors-tx
+        #   mountPath: /home/fabric-external-chaincodes/channel-artifacts/org2Anchors.tx
         - name: channel-artifacts
           mountPath: /home/fabric-external-chaincodes/channel-artifacts/
         - name: orderer0-config
@@ -51,16 +59,32 @@ spec:
           mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/
         - name: ca-org2-config
           mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/
+        # - name: ca-org1-config
+        #   mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1
+        # - name: ca-org2-config
+        #   mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2
         - name: cli-chaincode
           mountPath: /home/fabric-external-chaincodes/chaincode/
-        - name: peer0-org1-crypto-config
-          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/
-        - name: peer0-org2-crypto-config
-          mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/
+        # - name: peer0-org1-crypto-config
+        #   mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1/
+        # - name: peer0-org2-crypto-config
+        #   mountPath: /home/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2/
         - name: fabcar
           mountPath: /home/fabric-external-chaincodes/fabcar/
       restartPolicy: Never
       volumes:
+      # - name: genesis-block
+      #   persistentVolumeClaim:
+      #     claimName: genesis-block
+      # - name: channel-tx
+      #   persistentVolumeClaim:
+      #     claimName: channel-tx
+      # - name: org1-anchors-tx
+      #   persistentVolumeClaim:
+      #     claimName: org1-anchors-tx
+      # - name: org2-anchors-tx
+      #   persistentVolumeClaim:
+      #     claimName: org2-anchors-tx
       - name: channel-artifacts
         persistentVolumeClaim:
           claimName: channel-artifacts
@@ -82,12 +106,12 @@ spec:
       - name: cli-chaincode
         persistentVolumeClaim:
           claimName: cli-chaincode
-      - name: peer0-org1-crypto-config
-        persistentVolumeClaim:
-          claimName: peer0-org1-crypto-config
-      - name: peer0-org2-crypto-config
-        persistentVolumeClaim:
-          claimName: peer0-org2-crypto-config
       - name: fabcar
         persistentVolumeClaim:
           claimName: fabcar
+      # - name: ca-org1-crypto-config
+      #   persistentVolumeClaim:
+      #     claimName: ca-org1-crypto-config
+      # - name: ca-org2-crypto-config
+      #   persistentVolumeClaim:
+      #     claimName: ca-org2-crypto-config

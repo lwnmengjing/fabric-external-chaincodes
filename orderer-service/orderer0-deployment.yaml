@@ -42,7 +42,7 @@ spec:
             - name: ORDERER_METRICS_PROVIDER
               value: prometheus
             - name: ORDERER_GENERAL_GENESISFILE
-              value: /var/hyperledger/orderer/genesis.block
+              value: /var/hyperledger/channel-artifacts/genesis.block
             - name: ORDERER_GENERAL_GENESISMETHOD
               value: file
             - name: ORDERER_GENERAL_LISTENADDRESS
@@ -73,10 +73,10 @@ spec:
           volumeMounts:
           - name: orderer0-storage
             mountPath: /var/hyperledger/production/
-          # - name: channel-artifacts
-          #   mountPath: /var/hyperledger/orderer/
+          - name: channel-artifacts
+            mountPath: /var/hyperledger/channel-artifacts/
           - name: orderer0-config
-            mountPath: /var/hyperledger/orderer
+            mountPath: /var/hyperledger/orderer/
             # - mountPath: /var/hyperledger/production
             #   name: orderer-persistentdata
             # - mountPath: /var/hyperledger/orderer/genesis.block
@@ -91,9 +91,9 @@ spec:
       - name: orderer0-storage
         persistentVolumeClaim:
           claimName: orderer0-storage
-      # - name: channel-artifacts
-      #   persistentVolumeClaim:
-      #     claimName: channel-artifacts
+      - name: channel-artifacts
+        persistentVolumeClaim:
+          claimName: channel-artifacts
       - name: orderer0-config
         persistentVolumeClaim:
           claimName: orderer0-config

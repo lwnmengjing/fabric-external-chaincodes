@@ -1,21 +1,70 @@
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: channel-artifacts
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/channel-artifacts
+  storageClassName: standard #/root/fabric-external-chaincodes/channel-artifacts
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 10Mi
 ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: genesis-block
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/channel-artifacts/genesis.block
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 10Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: channel-tx
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/channel-artifacts/channel.tx
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: org1-anchors-tx
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/channel-artifacts/org1Anchors.tx
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: org2-anchors-tx
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/channel-artifacts/org2Anchors.tx
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Mi
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: orderer0-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer0
   accessModes:
     - ReadWriteOnce
   resources:
@@ -27,7 +76,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer1-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer1
   accessModes:
     - ReadWriteOnce
   resources:
@@ -39,7 +88,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer2-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/ordererOrganizations/consortium/orderers/orderer2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -51,7 +100,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: ca-org1-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1
   accessModes:
     - ReadWriteOnce
   resources:
@@ -63,7 +112,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: ca-org2-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -75,45 +124,55 @@ kind: PersistentVolumeClaim
 metadata:
   name: cli-chaincode
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/chaincode
+  storageClassName: standard #/root/fabric-external-chaincodes/chaincode
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: peer0-org1-crypto-config
-spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Mi
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: peer0-org1-crypto-config
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/peers/peer0-org1
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Mi
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: ca-org2-crypto-config
+# spec:
+#   storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 1Mi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ca-org2-crypto-config
+  name: ca-org1-crypto-config
 spec:
-  storageClassName: hostpath #//root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/ca/
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org1/ca/
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Mi
-
-      
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: fabcar
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/fabcar
+  storageClassName: standard #/root/fabric-external-chaincodes/fabcar
   accessModes:
     - ReadWriteOnce
   resources:
@@ -125,7 +184,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: peer0-org2-crypto-config
 spec:
-  storageClassName: hostpath #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2
+  storageClassName: standard #/root/fabric-external-chaincodes/crypto-config/peerOrganizations/org2/peers/peer0-org2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -137,7 +196,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer0-storage
 spec:
-  storageClassName: hostpath #/home/storage/orderer
+  storageClassName: standard #/home/storage/orderer
   accessModes:
     - ReadWriteOnce
   resources:
@@ -149,7 +208,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer1-storage
 spec:
-  storageClassName: hostpath #/home/storage/orderer
+  storageClassName: standard #/home/storage/orderer1
   accessModes:
     - ReadWriteOnce
   resources:
@@ -161,9 +220,34 @@ kind: PersistentVolumeClaim
 metadata:
   name: orderer2-storage
 spec:
-  storageClassName: hostpath #/home/storage/orderer
+  storageClassName: standard #/home/storage/orderer2
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peer0-org1
+spec:
+  storageClassName: standard #/home/storage/peer0-org1
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: peer0-org2
+spec:
+  storageClassName: standard #/home/storage/peer0-org2
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
